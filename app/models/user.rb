@@ -115,10 +115,14 @@ class User < ApplicationRecord
   end
 
 
-
+  def to_param
+    slug
+  end
+  
   private
 
   def generate_slug
      self.slug = email.downcase.gsub(/[!@%&"_.]/,'-') if email
   end
+
 end
