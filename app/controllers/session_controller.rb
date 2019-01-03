@@ -13,7 +13,7 @@ class SessionController < ApplicationController
         flash[:error] = 'Sorry, your account is disabled'
         redirect_to root_path
       else
-        session[:user_id] = user.id
+        session[:slug] = user.slug
         flash[:success] = 'You are logged in'
         redirect_user(user)
       end
@@ -24,7 +24,7 @@ class SessionController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    session[:slug] = nil
     session[:cart] = nil
     flash[:info] = 'You are logged out'
     redirect_to root_path

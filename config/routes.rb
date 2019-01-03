@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'session#destroy'
 
   get '/register', to: 'users#new', as: 'registration'
-  resources :users, only: [:create, :update]
+  resources :users, param: :slug, only: [:create, :update]
 
   get '/dashboard', to: 'merchants#show', as: 'dashboard'
   namespace :dashboard do
@@ -37,13 +37,13 @@ Rails.application.routes.draw do
   post '/admin/users/:merchant_id/items', to: 'dashboard/items#create', as: 'admin_user_items'
   patch '/admin/users/:merchant_id/items/:id', to: 'dashboard/items#update', as: 'admin_user_item'
   namespace :admin do
-    resources :users, only: [:index, :show, :edit] do
+    resources :users, param: :slug, only: [:index, :show, :edit] do
       patch '/enable', to: 'users#enable', as: 'enable'
       patch '/disable', to: 'users#disable', as: 'disable'
       patch '/upgrade', to: 'users#upgrade', as: 'upgrade'
       resources :orders, only: [:index, :show]
     end
-    resources :merchants, only: [:show] do
+    resources :merchants, param: :slug, only: [:show] do
       patch '/enable', to: 'merchants#enable', as: 'enable'
       patch '/disable', to: 'merchants#disable', as: 'disable'
       patch '/upgrade', to: 'merchants#downgrade', as: 'downgrade'

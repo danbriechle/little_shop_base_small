@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :build_cart
 
   def current_user
-    @current_user_lookup ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user_lookup ||= User.find_by(slug: session[:slug]) if session[:slug]
   end
 
   def current_merchant?
