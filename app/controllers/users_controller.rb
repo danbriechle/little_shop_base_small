@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.save
-      session[:user_id] = @user.id
+      session[:slug] = @user.slug
       flash[:success] = 'You are registered and logged in'
       redirect_to profile_path
     else
@@ -21,11 +21,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(slug: params[:slug])
+
     render file: 'errors/not_found', status: 404 unless current_user == @user || current_admin?
 
     @user.update(user_params)
     if @user.save
-      session[:slug] = @user
+      session[:slug] = @user.slug
       flash[:success] = 'Profile data updated'
       if current_user == @user
         redirect_to profile_path
@@ -41,6 +42,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name, :address, :city, :state, :zip)
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :address, :city, :state, :zip, :slug)
   end
 end

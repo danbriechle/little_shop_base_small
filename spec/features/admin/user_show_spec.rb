@@ -10,8 +10,7 @@ RSpec.describe 'Admin User Show workflow', type: :feature do
     end
     it 'allows admin to see a user profile' do
       visit admin_users_path
-
-      within "#user-#{@user_1.id}" do
+      within "#user-#{@user_1.slug}" do
         click_link(@user_1.name)
       end
 

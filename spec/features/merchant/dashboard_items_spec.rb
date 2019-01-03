@@ -103,6 +103,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
         end
         expect(page).to have_content("#{name} has been added!")
         item = Item.last
+      
 
         within "#item-#{item.id}" do
           expect(page).to have_content("ID: #{item.id}")

@@ -20,15 +20,15 @@ class Dashboard::ItemsController < Dashboard::BaseController
       ip[:image] = 'https://picsum.photos/200/300/?image=524'
     end
     ip[:active] = true
-    @merchant = current_user
+      @merchant = current_user
     if current_admin?
-      @user = User.find_by(slug: params[:user_id])
+      @user = User.find_by(slug: params[:merchant_id])
     end
     @item = @merchant.items.create(ip)
     if @item.save
       flash[:success] = "#{@item.name} has been added!"
       if current_admin?
-        redirect_to admin_merchant_items_path(@merchant)
+        redirect_to admin_merchant_items_path(@user)
       else
         redirect_to dashboard_items_path
       end
