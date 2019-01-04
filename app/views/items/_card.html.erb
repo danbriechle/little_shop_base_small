@@ -4,7 +4,7 @@
   </a>
 
   <div class="card-body">
-    <h5 class="card-title"><%= link_to item.name, item_path(item) %></h5>
+    <h5 class="card-title"><%= link_to item.name, item_path(item.slug) %></h5>
     <p>Description: <em><%= item.description %></em></p>
     <p>Price: <%= number_to_currency(item.price) %></p>
     <p>

@@ -11,7 +11,7 @@ class Profile::OrdersController < ApplicationController
       order.order_items.create!(
         item: item,
         price: item.price,
-        quantity: @cart.count_of(item.id),
+        quantity: @cart.count_of(item),
         fulfilled: false)
     end
     session[:cart] = nil

@@ -87,11 +87,11 @@ RSpec.describe 'Merchant Dashboard page' do
             expect(page).to_not have_button('Fulfill Item')
           end
 
-          within "#item-#{item.id}" do
+          within "#item-#{item}" do
             expect(page).to have_link(item.name)
             expect(page.find("#item-#{item.id}-image")['src']).to have_content(item.image)
-            expect(page).to have_content("Price: #{number_to_currency(order.item_price(item.id))}")
-            expect(page).to have_content("Quantity: #{order.item_quantity(item.id)}")
+            expect(page).to have_content("Price: #{number_to_currency(order.item_price(item))}")
+            expect(page).to have_content("Quantity: #{order.item_quantity(item)}")
             expect(page).to have_button('Fulfill Item')
           end
           expect(page).to_not have_css("#item-#{item_2.id}")
@@ -100,7 +100,7 @@ RSpec.describe 'Merchant Dashboard page' do
           click_button 'Fulfill Item'
         end
         expect(current_path).to eq(dashboard_order_path(order))
-        within "#item-#{item.id}" do
+        within "#item-#{item}" do
           expect(page).to have_content("Fulfilled!")
           expect(page).to_not have_button('Fulfill Item')
         end
@@ -119,7 +119,7 @@ RSpec.describe 'Merchant Dashboard page' do
 
         visit dashboard_order_path(order)
 
-        within "#item-#{item.id}" do
+        within "#item-#{item}" do
           expect(page).to_not have_button('Fulfill Item')
           expect(page).to have_content("Cannot fulfill, not enough inventory")
         end

@@ -11,16 +11,16 @@
   <p>Status: <%= @order.status %></p>
 
   <% @items.each do |item| %>
-    <%= tag.div id: "item-#{item.id}" do %>
+    <%= tag.div id: "item-#{item}" do %>
       <p><%= link_to item.name, item_path(item) %></p>
-      <p><img id="item-<%= item.id %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="150" /></p>
-      <p>Price: <%= number_to_currency(@order.item_price(item.id)) %></p>
-      <p>Quantity: <%= @order.item_quantity(item.id) %></p>
+      <p><img id="item-<%= item %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="150" /></p>
+      <p>Price: <%= number_to_currency(@order.item_price(item)) %></p>
+      <p>Quantity: <%= @order.item_quantity(item) %></p>
       <p>
-      <% if @order.item_fulfilled?(item.id) %>
+      <% if @order.item_fulfilled?(item) %>
         Fulfilled!
       <% else %>
-        <% if current_user.inventory_check(item.id) >= @order.item_quantity(item.id) %>
+        <% if current_user.inventory_check(item) >= @order.item_quantity(item) %>
         <%= button_to 'Fulfill Item', dashboard_order_item_fulfill_path(@order, item), method: :patch %>
         <% else %>
         Cannot fulfill, not enough inventory
