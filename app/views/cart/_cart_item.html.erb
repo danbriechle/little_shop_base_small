@@ -10,7 +10,7 @@
     <% if @cart.count_of(item.id) < item.inventory %>
     <%= button_to 'Add more to cart', cart_add_more_item_path(item) %>
     <% end %>
-    <%= button_to 'Remove one from cart', cart_remove_more_item_path(item.slug), method: :delete %>
-    <%= button_to 'Remove all from cart', cart_remove_item_all_path(item.slug), method: :delete %>
+    <%= button_to 'Remove one from cart', cart_remove_more_item_path(item), method: :delete %>
+    <%= button_to 'Remove all from cart', cart_remove_item_all_path(item), method: :delete %>
     </p>
   </div>

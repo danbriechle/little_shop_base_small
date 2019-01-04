@@ -67,6 +67,7 @@ RSpec.describe 'Merchant Dashboard page' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
         visit item_path(item)
+
         expect(page).to have_content("In stock: 100")
 
         visit dashboard_path
@@ -105,7 +106,7 @@ RSpec.describe 'Merchant Dashboard page' do
           expect(page).to_not have_button('Fulfill Item')
         end
 
-        visit item_path(item)
+        visit item_path(item.slug)
         expect(page).to have_content("In stock: 90")
       end
       it 'blocks me from fulfilling an order if I lack inventory' do

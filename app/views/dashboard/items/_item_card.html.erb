@@ -3,7 +3,7 @@
 
 <p>ID: <%= item.id %></p>
 <p>Name: <%= link_to item.name, item_path(item.slug) %></p>
-<a href="<%= item_path(item) %>">
+<a href="<%= item_path(item.slug) %>">
 <img id="item-<%= item.id %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="<%= img_width %>" />
 </a>
 <p>Price: <%= number_to_currency(item.price) %></p>

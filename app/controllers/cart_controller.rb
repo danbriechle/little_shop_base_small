@@ -20,7 +20,7 @@ class CartController < ApplicationController
   def remove_more_item
     item = Item.find_by(slug: params[:slug])
     @cart.subtract_item(item.id)
-    flash[:success] = "You have removed 1 package of #{item.name} from your cart, new quantity is #{@cart.count_of(item)}"
+    flash[:success] = "You have removed 1 package of #{item.name} from your cart, new quantity is #{@cart.count_of(item.id)}"
     session[:cart] = @cart.contents
     redirect_to cart_path
   end

@@ -137,7 +137,8 @@ RSpec.describe 'Profile Orders page', type: :feature do
           expect(page).to have_content("Fulfilled: Yes")
         end
 
-        visit item_path(@item)
+        visit item_path(@item.slug)
+        
         expect(page).to have_content("In stock: 100")
 
 
@@ -158,7 +159,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
         end
         expect(page).to have_content("Status: cancelled")
 
-        visit item_path(@item)
+        visit item_path(@item.slug)
         expect(page).to have_content("In stock: 100")
 
 
@@ -187,7 +188,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
           expect(page).to have_content("Fulfilled: No")
         end
 
-        visit item_path(@item)
+        visit item_path(@item.slug)
         expect(page).to have_content("In stock: 125")
       end
     end
