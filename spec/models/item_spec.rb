@@ -70,10 +70,11 @@ RSpec.describe Item, type: :model do
 
   describe 'slug methods' do
     it '.generate_slug' do
-      item_1 = create(:item, name: "best item ever")
-      item_2 = create(:item, name: "best item ever")
-      expect(item_1.slug).to have_content("best-item-ever")
-      expect(item_2.slug).to have_content("best-item-ever")
+      item_1 = create(:item, name: "best_item ever?")
+      item_2 = create(:item, name: "best item@ever!")
+
+      expect(item_1.slug.include?("best-item-ever")).to be true
+      expect(item_2.slug.include?("best-item-ever")).to be true
 
       expect(item_1.slug).to_not eq(item_2.slug)
     end
