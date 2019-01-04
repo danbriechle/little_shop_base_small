@@ -1,4 +1,4 @@
 <p><%= link_to "Order ID #{order.id}", dashboard_order_path(order) %></p>
 <p>Created: <%= order.created_at %></p>
-<p>Items in Order: <%= order.my_item_count(@merchant.id) %></p>
-<p>Value of Order: <%= number_to_currency(order.my_revenue_value(@merchant.id)) %></p>
+<p>Items in Order: <%= order.my_item_count(@merchant) %></p>
+<p>Value of Order: <%= number_to_currency(order.my_revenue_value(@merchant)) %></p>
