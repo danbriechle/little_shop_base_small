@@ -138,7 +138,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
         end
 
         visit item_path(@item.slug)
-        
+
         expect(page).to have_content("In stock: 100")
 
 
@@ -188,7 +188,9 @@ RSpec.describe 'Profile Orders page', type: :feature do
           expect(page).to have_content("Fulfilled: No")
         end
 
-        visit item_path(@item.slug)
+        visit items_path
+        save_and_open_page
+
         expect(page).to have_content("In stock: 125")
       end
     end
