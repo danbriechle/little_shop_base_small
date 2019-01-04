@@ -131,6 +131,8 @@ RSpec.describe 'Cart workflow', type: :feature do
       within "#item-#{@item.id}" do
         click_button 'Remove all from cart'
       end
+
+      save_and_open_page
       expect(page).to have_content("You have removed all packages of #{@item.name} from your cart")
       expect(page).to have_content('Your cart is empty')
       expect(page).to have_link('Cart: 0')

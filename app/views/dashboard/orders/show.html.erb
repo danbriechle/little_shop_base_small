@@ -11,9 +11,9 @@
   <p>Status: <%= @order.status %></p>
 
   <% @items.each do |item| %>
-    <%= tag.div id: "item-#{item}" do %>
+    <%= tag.div id: "item-#{item.id}" do %>
       <p><%= link_to item.name, item_path(item) %></p>
-      <p><img id="item-<%= item %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="150" /></p>
+      <p><img id="item-<%= item.id %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="150" /></p>
       <p>Price: <%= number_to_currency(@order.item_price(item)) %></p>
       <p>Quantity: <%= @order.item_quantity(item) %></p>
       <p>
