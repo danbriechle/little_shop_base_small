@@ -170,5 +170,12 @@ RSpec.describe User, type: :model do
         expect(@merchant.top_3_revenue_users[2].revenue).to eq(120)
       end
     end
+
+    describe 'slug_method' do
+      it '.generate_slug' do
+        user = create(:user, email: 'Dave_Johnson345@aol.com' )
+        expect(user.slug).to eq('dave-johnson345-aol-com')
+      end
+    end
   end
 end

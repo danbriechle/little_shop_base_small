@@ -20,15 +20,15 @@ class Dashboard::ItemsController < Dashboard::BaseController
       ip[:image] = 'https://picsum.photos/200/300/?image=524'
     end
     ip[:active] = true
-    @merchant = current_user
+      @merchant = current_user
     if current_admin?
-      @merchant = User.find(params[:merchant_id])
+      @merchant = User.find_by(slug: params[:merchant_slug])
     end
     @item = @merchant.items.create(ip)
     if @item.save
       flash[:success] = "#{@item.name} has been added!"
       if current_admin?
-        redirect_to admin_merchant_items_path(@merchant)
+        redirect_to admin_merchant_items_path(@merchant.slug)
       else
         redirect_to dashboard_items_path
       end
@@ -51,7 +51,7 @@ class Dashboard::ItemsController < Dashboard::BaseController
       @item.destroy
     end
     if current_admin?
-      redirect_to admin_merchant_items_path(merchant)
+      redirect_to admin_merchant_items_path(merchant.slug)
     else
       redirect_to dashboard_items_path
     end
@@ -60,8 +60,9 @@ class Dashboard::ItemsController < Dashboard::BaseController
   def update
     @merchant = current_user
     if current_admin?
-      @merchant = User.find(params[:merchant_id])
+    @merchant = User.find_by(slug: params[:merchant_slug])
     end
+    
     @item = Item.find(params[:id])
 
     ip = item_params
@@ -73,7 +74,7 @@ class Dashboard::ItemsController < Dashboard::BaseController
     if @item.save
       flash[:success] = "#{@item.name} has been updated!"
       if current_admin?
-        redirect_to admin_merchant_items_path(@merchant)
+        redirect_to admin_merchant_items_path(@merchant.slug)
       else
         redirect_to dashboard_items_path
       end
@@ -106,7 +107,7 @@ class Dashboard::ItemsController < Dashboard::BaseController
     item.active = state
     item.save
     if current_admin?
-      redirect_to admin_merchant_items_path(item.user)
+      redirect_to admin_merchant_items_path(item.user.slug)
     else
       redirect_to dashboard_items_path
     end

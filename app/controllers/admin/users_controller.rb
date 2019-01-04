@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:slug])
     if @user.merchant?
       redirect_to admin_merchant_path(@user)
     else
@@ -13,7 +13,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:slug])
     @user.password_digest = nil
     render :'users/edit'
   end
@@ -27,14 +27,14 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def upgrade
-    set_user_role(User.find(params[:user_id]), :merchant)
+    set_user_role(User.find_by(slug: params[:user_slug]), :merchant)
     redirect_to admin_users_path
   end
 
   private
 
   def set_user_active(state)
-    user = User.find(params[:user_id])
+    user = User.find_by(slug: params[:user_slug])
     user.active = state
     user.save
     redirect_to admin_users_path

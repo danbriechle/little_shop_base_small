@@ -42,7 +42,7 @@ class Profile::OrdersController < ApplicationController
     end
     if current_admin?
       user = order.user
-      redirect_to admin_user_order_path(user, order)
+      redirect_to admin_user_order_path(user.slug, order)
     else
       redirect_to profile_order_path(order)
     end

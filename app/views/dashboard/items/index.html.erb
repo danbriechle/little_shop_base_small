@@ -5,7 +5,6 @@
 <% else %>
 <%= link_to 'Add new Item', new_dashboard_item_path %>
 <% end %>
-
 <% @items.each do |item| %>
   <%= tag.div id: "item-#{item.id}" do %>
   <%= render partial: "/dashboard/items/item_card", locals: {item: item, img_width: 200} %>

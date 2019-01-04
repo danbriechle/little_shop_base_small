@@ -15,15 +15,15 @@
 <% @merchants.each do |merchant| %>
   <%= tag.tr id: "merchant-#{merchant.id}" do %>
   <td>
-    <% if current_admin? %><%= link_to merchant.name, admin_merchant_path(merchant) %><% else %><%= merchant.name %><% end %>,
+    <% if current_admin? %><%= link_to merchant.name, admin_merchant_path(merchant.slug) %><% else %><%= merchant.name %><% end %>,
     <%= merchant.city %> <%= merchant.state %></td>
   <td>Registered: <%= merchant.created_at %></td>
   <% if current_admin? %>
   <td>
       <% if merchant.active? %>
-      <%= button_to 'Disable', admin_merchant_disable_path(merchant), method: :patch %>
+      <%= button_to 'Disable', admin_merchant_disable_path(merchant.slug), method: :patch %>
       <% else %>
-      <%= button_to 'Enable', admin_merchant_enable_path(merchant), method: :patch %>
+      <%= button_to 'Enable', admin_merchant_enable_path(merchant.slug), method: :patch %>
       <% end %>
     <% end %>
   </td>

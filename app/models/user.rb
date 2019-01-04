@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  before_save :generate_slug
 
   has_many :items, foreign_key: 'merchant_id'
   has_many :orders
@@ -112,4 +113,16 @@ class User < ApplicationRecord
       .order('revenue desc')
       .limit(3)
   end
+
+
+  def to_param
+    slug
+  end
+  
+  private
+
+  def generate_slug
+     self.slug = email.downcase.gsub(/[!@%&"_.]/,'-') if email
+  end
+
 end

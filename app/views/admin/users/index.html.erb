@@ -1,14 +1,14 @@
 <h2>Regular Users</h2>
 
 <% @users.each do |user| %>
-  <%= tag.div id: "user-#{user.id}" do %>
-  <p><%= link_to user.name, admin_user_path(user) %><br/>
+  <%= tag.div id: "user-#{user.slug}" do %>
+  <p><%= link_to user.name, admin_user_path(user.slug) %></p><br/>
   Registered: <%= user.created_at %>
   <% if user.active? %>
-  <%= button_to 'Disable', admin_user_disable_path(user), method: :patch %>
+  <%= button_to 'Disable', admin_user_disable_path(user.slug), method: :patch %>
   <% else %>
-  <%= button_to 'Enable', admin_user_enable_path(user), method: :patch %>
+  <%= button_to 'Enable', admin_user_enable_path(user.slug), method: :patch %>
   <% end %>
-  <%= button_to 'Upgrade to Merchant', admin_user_upgrade_path(user), method: :patch %>
+  <%= button_to 'Upgrade to Merchant', admin_user_upgrade_path(user.slug), method: :patch %>
   <% end %>
 <% end %>

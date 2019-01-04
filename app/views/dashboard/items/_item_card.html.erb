@@ -10,7 +10,7 @@
 <p>Inventory: <%= item.inventory %></p>
 <p>
 <% if current_admin? %>
-<%= link_to 'Edit Item', edit_admin_merchant_item_path(@merchant, item) %>
+<%= link_to 'Edit Item', edit_admin_merchant_item_path(@merchant.slug, item) %>
 <% else %>
 <%= link_to 'Edit Item', edit_dashboard_item_path(item) %>
 <% end %>

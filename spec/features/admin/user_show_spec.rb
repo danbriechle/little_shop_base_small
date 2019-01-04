@@ -10,8 +10,8 @@ RSpec.describe 'Admin User Show workflow', type: :feature do
     end
     it 'allows admin to see a user profile' do
       visit admin_users_path
-
-      within "#user-#{@user_1.id}" do
+      within "#user-#{@user_1.slug}" do
+        expect(page).to have_link(@user_1.name)
         click_link(@user_1.name)
       end
 
@@ -25,6 +25,7 @@ RSpec.describe 'Admin User Show workflow', type: :feature do
       end
       expect(page).to have_link('Edit Profile')
     end
+
     it 'allows admin to edit a user profile' do
       visit admin_user_path(@user_1)
 
@@ -51,7 +52,7 @@ RSpec.describe 'Admin User Show workflow', type: :feature do
       user_check = User.find(@user_1.id)
       expect(user_check.password_digest).to_not eq(@user_1.password_digest)
 
-      expect(current_path).to eq(admin_user_path(@user_1))
+      expect(current_path).to eq(admin_user_path(user_check.slug))
       expect(page).to have_content("Profile Page for #{user_check.name}")
       expect(page).to have_content(user_check.email)
       within '#address' do

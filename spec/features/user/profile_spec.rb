@@ -119,7 +119,7 @@ RSpec.describe 'User Profile workflow', type: :feature do
         fill_in :user_email,	with: 'unique@gmail.com'
         click_button 'Update User'
 
-        expect(current_path).to eq(user_path(user))
+        expect(current_path).to eq(user_path(user.slug))
         expect(page).to have_content('Profile update failed')
         expect(page).to have_content('Email has already been taken')
       end
