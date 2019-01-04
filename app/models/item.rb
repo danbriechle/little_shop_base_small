@@ -44,11 +44,14 @@ class Item < ApplicationRecord
     OrderItem.find_by_item_id(self.id) !=  nil
   end
 
-  
+  def to_param
+    slug
+  end
+
   private
 
   def generate_slug
-    self.slug = name.downcase.gsub(/[!@%&"_.?*()#$^~ ]/,'-') +SecureRandom.uuid if name
+    self.slug = name.downcase.gsub(/[!@%&"_.?*()#$^~ ]/,'-').delete(" ") + SecureRandom.uuid if name
   end
 
 end
