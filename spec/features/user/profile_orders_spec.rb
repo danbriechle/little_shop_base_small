@@ -196,5 +196,48 @@ RSpec.describe 'Profile Orders page', type: :feature do
         expect(page).to have_content("In stock: 125")
       end
     end
+
+    describe 'allows me to leave a rating for items I have purchased'do
+    #Ratings will include a title, a description, and a rating from 1 to 5.
+    end
+
+    describe 'i cannot rate an item I have canceled purchase of' do
+    end
+
+    describe 'I can only write one rating per item order' do
+    end
+
+    describe 'if I order th item again I can leave and other rating' do
+    end
+
+    describe 'I can disable a rating' do
+    end
+
+    describe 'has an average rating shown on the item show page' do
+    end
   end
 end
+
+#navigate to a reviews
+#index page from their profile page, and from there they can add, edit, show, or delete any review.
+
+# Users will have the ability to leave ratings for items they have successfully purchased.
+#
+# Users cannot rate items from orders which have been canceled by the user.
+#
+# Users can write one rating per item per order. If the user orders an item (in any quantity) they can leave one rating.
+#If they order the item again in a different order, the user can leave another rating.
+#
+# Build all CRUD functionality for users to add a rating through their order show page.
+#
+# Users can disable any rating they created.
+#
+# Disabled ratings should not factor into total counts of ratings, nor averages of ratings.
+#
+# Ratings will include a title, a description, and a rating from 1 to 5.
+#
+# Mod 2 Learning Goals reflected:
+# Database relationships
+# Rails development (including routing)
+# Software Testing
+# HTML/CSS styling and layout
