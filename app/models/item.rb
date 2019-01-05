@@ -48,6 +48,10 @@ class Item < ApplicationRecord
     slug
   end
 
+  def slug_update(name)
+    name.downcase.gsub(/[!@%&"_.?*()#$^~ ]/,'-').delete(" ") + SecureRandom.uuid
+  end
+
   private
 
   def generate_slug

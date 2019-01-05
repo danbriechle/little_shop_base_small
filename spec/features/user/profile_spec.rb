@@ -50,7 +50,7 @@ RSpec.describe 'User Profile workflow', type: :feature do
 
         user_check = User.find(user.id)
         expect(user_check.password_digest).to_not eq(user.password_digest)
-
+        expect(user_check.slug.include?("email-2")).to be true
         expect(current_path).to eq(profile_path)
         expect(page).to have_content("Profile Page for #{user_check.name}")
         expect(page).to have_content(user_check.email)
@@ -93,7 +93,7 @@ RSpec.describe 'User Profile workflow', type: :feature do
 
         user_check = User.find(user.id)
         expect(user_check.password_digest).to eq(user.password_digest)
-
+        expect(user_check.slug.include?("email-2")).to be true
         expect(current_path).to eq(profile_path)
         expect(page).to have_content("Profile Page for #{user_check.name}")
         expect(page).to have_content(user_check.email)
@@ -118,6 +118,9 @@ RSpec.describe 'User Profile workflow', type: :feature do
 
         fill_in :user_email,	with: 'unique@gmail.com'
         click_button 'Update User'
+        user_check = User.find(user.id)
+
+        expect(user_check.slug.include?("ian-gmail-com")).to be true
 
         expect(current_path).to eq(user_path(user.slug))
         expect(page).to have_content('Profile update failed')

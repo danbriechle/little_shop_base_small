@@ -62,15 +62,22 @@ class Dashboard::ItemsController < Dashboard::BaseController
     if current_admin?
     @merchant = User.find_by(slug: params[:merchant_slug])
     end
-    
+
     @item = Item.find_by(slug: params[:slug])
+    old_name = @item.name
 
     ip = item_params
+
     if ip[:image].empty?
       ip[:image] = 'https://picsum.photos/200/300/?image=524'
     end
     ip[:active] = true
     @item.update(ip)
+
+    unless item_params[:name] == old_name
+     @item[:slug] = @item.slug_update(item_params[:name])
+    end
+  
     if @item.save
       flash[:success] = "#{@item.name} has been updated!"
       if current_admin?
