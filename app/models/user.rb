@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
-  before_save :generate_slug
+  before_create :generate_slug
 
   has_many :items, foreign_key: 'merchant_id'
   has_many :orders
@@ -118,7 +118,7 @@ class User < ApplicationRecord
   def to_param
     slug
   end
-  
+
   private
 
   def generate_slug

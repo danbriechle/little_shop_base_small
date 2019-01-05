@@ -1,6 +1,6 @@
 <div class="card float-left m-3" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title"><%= link_to item.name, item_path(item) %></h5>
+    <h5 class="card-title"><%= link_to item.name, item_path(item.slug) %></h5>
     <img id="item-<%= item.id %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="<%= img_width %>" />
     <p>Merchant: <%= item.user.name %></p>
     <p>Price: <%= number_to_currency(item.price) %></p>
@@ -8,10 +8,9 @@
     <p>Subtotal: <%= number_to_currency(@cart.subtotal(item.id)) %></p>
     <p>
     <% if @cart.count_of(item.id) < item.inventory %>
-    <%= button_to 'Add more to cart', cart_add_more_item_path(item) %>
+    <%= button_to 'Add more to cart', cart_add_more_item_path(item.slug) %>
     <% end %>
-    <%= button_to 'Remove one from cart', cart_remove_more_item_path(item), method: :delete %>
-    <%= button_to 'Remove all from cart', cart_remove_item_all_path(item), method: :delete %>
+    <%= button_to 'Remove one from cart', cart_remove_more_item_path(item.slug), method: :delete %>
+    <%= button_to 'Remove all from cart', cart_remove_item_all_path(item.slug), method: :delete %>
     </p>
   </div>
-</div>

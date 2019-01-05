@@ -3,6 +3,8 @@ class Item < ApplicationRecord
   has_many :order_items
   has_many :orders, through: :order_items
 
+  before_create :generate_slug
+
   validates_presence_of :name, :description
   validates :price, presence: true, numericality: {
     only_integer: false,
@@ -41,4 +43,15 @@ class Item < ApplicationRecord
   def ever_ordered?
     OrderItem.find_by_item_id(self.id) !=  nil
   end
+
+  def to_param
+    slug
+  end
+
+  private
+
+  def generate_slug
+    self.slug = name.downcase.gsub(/[!@%&"_.?*()#$^~ ]/,'-').delete(" ") + SecureRandom.uuid if name
+  end
+
 end

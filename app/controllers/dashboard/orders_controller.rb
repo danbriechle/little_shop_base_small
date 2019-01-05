@@ -6,7 +6,7 @@ class Dashboard::OrdersController < Dashboard::BaseController
 
   def fulfill_item
     order = Order.find(params[:order_id])
-    item = Item.find(params[:id])
+    item = Item.find_by(slug: params[:slug])
     oi = order.order_items.find_by(item_id: item.id)
     if oi
       oi.fulfilled = true

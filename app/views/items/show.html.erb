@@ -1,13 +1,14 @@
+
 <h2><%= @item.name %></h2>
 
 <%= tag.div id: "item-#{@item.id}" do %>
 <%= render partial: "card", locals: {item: @item, img_width: 400} %>
 
 <% if @item.inventory > 0 && (current_user.nil? || current_user.default?) %>
-<%= button_to 'Add to Cart', cart_add_item_path(@item) %>
+<%= button_to 'Add to Cart', cart_add_item_path(@item.slug) %>
 <% elsif @item.inventory == 0 %>
 Merchant is out of stock, sorry
 <% end %>
 
-<p>Average time to fulfill: <%= fulfillment_time(@item.avg_fulfillment_time) %>
+<p>Average time to fulfill: <%= fulfillment_time(@item.avg_fulfillment_time) %> </p>
 <% end %>

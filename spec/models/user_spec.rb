@@ -99,9 +99,9 @@ RSpec.describe User, type: :model do
       merchant = create(:merchant)
       item = create(:item, user: merchant, inventory: 100)
 
-      expect(admin.inventory_check(item.id)).to eq(nil)
-      expect(user.inventory_check(item.id)).to eq(nil)
-      expect(merchant.inventory_check(item.id)).to eq(item.inventory)
+      expect(admin.inventory_check(item)).to eq(nil)
+      expect(user.inventory_check(item)).to eq(nil)
+      expect(merchant.inventory_check(item)).to eq(item.inventory)
     end
 
     describe 'merchant stats methods' do

@@ -67,4 +67,16 @@ RSpec.describe Item, type: :model do
       expect(item_2.ever_ordered?).to eq(false)
     end
   end
+
+  describe 'slug methods' do
+    it '.generate_slug' do
+      item_1 = create(:item, name: "best_item ever?")
+      item_2 = create(:item, name: "best item@ever!")
+
+      expect(item_1.slug.include?("best-item-ever")).to be true
+      expect(item_2.slug.include?("best-item-ever")).to be true
+
+      expect(item_1.slug).to_not eq(item_2.slug)
+    end
+  end
 end

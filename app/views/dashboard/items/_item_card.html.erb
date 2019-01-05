@@ -2,27 +2,27 @@
   <div class="card-body">
 
 <p>ID: <%= item.id %></p>
-<p>Name: <%= link_to item.name, item_path(item) %></p>
-<a href="<%= item_path(item) %>">
+<p>Name: <%= link_to item.name, item_path(item.slug) %></p>
+<a href="<%= item_path(item.slug) %>">
 <img id="item-<%= item.id %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="<%= img_width %>" />
 </a>
 <p>Price: <%= number_to_currency(item.price) %></p>
 <p>Inventory: <%= item.inventory %></p>
 <p>
 <% if current_admin? %>
-<%= link_to 'Edit Item', edit_admin_merchant_item_path(@merchant.slug, item) %>
+<%= link_to 'Edit Item', edit_admin_merchant_item_path(@merchant, item) %>
 <% else %>
-<%= link_to 'Edit Item', edit_dashboard_item_path(item) %>
+<%= link_to 'Edit Item', edit_dashboard_item_path(item.slug) %>
 <% end %>
 </p>
 
 <p><% if item.active %>
-<%= button_to 'Disable Item', dashboard_disable_item_path(item), method: :patch %>
+<%= button_to 'Disable Item', dashboard_disable_item_path(item.slug), method: :patch %>
 <% else %>
-<%= button_to 'Enable Item', dashboard_enable_item_path(item), method: :patch %>
+<%= button_to 'Enable Item', dashboard_enable_item_path(item.slug), method: :patch %>
 <% end %>
 <% unless item.ever_ordered? %>
-<%= button_to 'Delete Item', dashboard_item_path(item), method: :delete %>
+<%= button_to 'Delete Item', dashboard_item_path(item.slug), method: :delete %>
 <% end %>
 </p>
 

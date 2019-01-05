@@ -1,10 +1,10 @@
 <div class="card float-left m-3" style="width: 18rem;">
-  <a href="<%= item_path(item) %>">
+  <a href="<%= item_path(item.slug) %>">
     <img class="card-img-top" id="item-<%= item.id %>-image" alt="image for <%= item.name %>" src="<%= item.image %>" width="<%= img_width %>" />
   </a>
 
   <div class="card-body">
-    <h5 class="card-title"><%= link_to item.name, item_path(item) %></h5>
+    <h5 class="card-title"><%= link_to item.name, item_path(item.slug) %></h5>
     <p>Description: <em><%= item.description %></em></p>
     <p>Price: <%= number_to_currency(item.price) %></p>
     <p>

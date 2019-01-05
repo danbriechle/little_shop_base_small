@@ -102,8 +102,6 @@ RSpec.describe 'Merchant Dashboard Items page' do
           expect(current_path).to eq(dashboard_items_path)
         end
         expect(page).to have_content("#{name} has been added!")
-
-
         item = Item.last
 
         within "#item-#{item.id}" do
@@ -130,19 +128,19 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as admin do' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit admin_merchant_items_path(@merchant)
+        visit admin_merchant_items_path(@merchant.slug)
       end
       after :each do
         click_link('Add new Item')
         if @am_admin
-          expect(current_path).to eq(new_admin_merchant_item_path(@merchant))
+          expect(current_path).to eq(new_admin_merchant_item_path(@merchant.slug))
         else
           expect(current_path).to eq(new_dashboard_item_path)
         end
         placeholder_image = 'https://picsum.photos/200/300/?image=524'
 
-        name = 'Item Name 1000000'
-        description = 'Item Description 8498r928482'
+        name = 'Item Name 1'
+        description = 'Item Description 1'
         price = 9999.99
         inventory = 10000
 
@@ -154,26 +152,25 @@ RSpec.describe 'Merchant Dashboard Items page' do
         click_button 'Create Item'
 
         if @am_admin
-          expect(current_path).to eq(admin_merchant_items_path(@merchant))
+          expect(current_path).to eq(admin_merchant_items_path(@merchant.slug))
         else
           expect(current_path).to eq(dashboard_items_path)
         end
         expect(page).to have_content("#{name} has been added!")
+        item = Item.last
 
-      #   item = Item.last
-      #
-      #   within "#item-#{item.id}" do
-      #     expect(page).to have_content("ID: #{item.id}")
-      #     expect(page).to have_content("Name: #{item.name}")
-      #     expect(page.find("#item-#{item.id}-image")['src']).to have_content(placeholder_image)
-      #     expect(page).to have_content("Price: #{item.number_to_currency(price)}")
-      #     expect(page).to have_content("Inventory: #{item.inventory}")
-      #     expect(page).to have_link('Edit Item')
-      #     expect(page).to have_button('Delete Item')
-      #     expect(page).to have_button('Disable Item')
-      #     click_link item.name
-      #   end
-      #   expect(page).to have_content(description)
+        within "#item-#{item.id}" do
+          expect(page).to have_content("ID: #{item.id}")
+          expect(page).to have_content("Name: #{name}")
+          expect(page.find("#item-#{item.id}-image")['src']).to have_content(placeholder_image)
+          expect(page).to have_content("Price: #{number_to_currency(price)}")
+          expect(page).to have_content("Inventory: #{inventory}")
+          expect(page).to have_link('Edit Item')
+          expect(page).to have_button('Delete Item')
+          expect(page).to have_button('Disable Item')
+          click_link item.name
+        end
+        expect(page).to have_content(description)
       end
     end
   end
@@ -188,7 +185,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as admin' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit new_admin_merchant_item_path(@merchant)
+        visit new_admin_merchant_item_path(@merchant.slug)
       end
       after :each do
         click_button 'Create Item'
@@ -216,7 +213,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as admin' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit admin_merchant_items_path(@merchant)
+        visit admin_merchant_items_path(@merchant.slug)
       end
       after :each do
         within "#item-#{@item.id}" do
@@ -235,7 +232,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
         click_button 'Update Item'
 
         if @am_admin
-          expect(current_path).to eq(admin_merchant_items_path(@merchant))
+          expect(current_path).to eq(admin_merchant_items_path(@merchant.slug))
         else
           expect(current_path).to eq(dashboard_items_path)
         end
@@ -257,12 +254,12 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as merchant' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
         @am_admin = false
-        visit edit_dashboard_item_path(@item)
+        visit edit_dashboard_item_path(@item.slug)
       end
       scenario 'when logged in as admin' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit edit_admin_merchant_item_path(@merchant, @item)
+        visit edit_admin_merchant_item_path(@merchant.slug, @item.slug)
       end
       after :each do
         placeholder_image = 'https://picsum.photos/200/300/?image=524'
@@ -284,12 +281,12 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as merchant' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
         @am_admin = false
-        visit edit_dashboard_item_path(@item)
+        visit edit_dashboard_item_path(@item.slug)
       end
       scenario 'when logged in as admin' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit edit_admin_merchant_item_path(@merchant, @item)
+        visit edit_admin_merchant_item_path(@merchant.slug, @item.slug)
       end
       after :each do
         fill_in :item_name, with: ""
@@ -320,7 +317,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
     scenario 'when logged in as admin' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
       @am_admin = true
-      visit admin_merchant_items_path(@merchant)
+      visit admin_merchant_items_path(@merchant.slug)
     end
     after :each do
       within "#item-#{@item.id}" do
@@ -328,7 +325,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
       end
 
       if @am_admin
-        expect(current_path).to eq(admin_merchant_items_path(@merchant))
+        expect(current_path).to eq(admin_merchant_items_path(@merchant.slug))
       else
         expect(current_path).to eq(dashboard_items_path)
       end
@@ -339,7 +336,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
       end
 
       if @am_admin
-        expect(current_path).to eq(admin_merchant_items_path(@merchant))
+        expect(current_path).to eq(admin_merchant_items_path(@merchant.slug))
       else
         expect(current_path).to eq(dashboard_items_path)
       end
@@ -359,7 +356,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as admin' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit admin_merchant_items_path(@merchant)
+        visit admin_merchant_items_path(@merchant.slug)
       end
       after :each do
         within "#item-#{@items[1].id}" do
@@ -367,7 +364,7 @@ RSpec.describe 'Merchant Dashboard Items page' do
         end
 
         if @am_admin
-          expect(current_path).to eq(admin_merchant_items_path(@merchant))
+          expect(current_path).to eq(admin_merchant_items_path(@merchant.slug))
         else
           expect(current_path).to eq(dashboard_items_path)
         end
@@ -384,13 +381,13 @@ RSpec.describe 'Merchant Dashboard Items page' do
       scenario 'when logged in as admin' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
         @am_admin = true
-        visit admin_merchant_items_path(@merchant)
+        visit admin_merchant_items_path(@merchant.slug)
       end
       after :each do
         page.driver.delete(dashboard_item_path(@items[0]))
         expect(page.status_code).to eq(302)
         if @am_admin
-          visit admin_merchant_items_path(@merchant)
+          visit admin_merchant_items_path(@merchant.slug)
         else
           visit dashboard_items_path
         end
