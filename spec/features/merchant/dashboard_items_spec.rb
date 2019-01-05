@@ -238,6 +238,10 @@ RSpec.describe 'Merchant Dashboard Items page' do
         end
         expect(page).to have_content("New #{@item.name} has been updated!")
 
+        item_check = Item.find(@item.id)
+
+        expect(item_check.slug.include?('new')).to be true
+
         within "#item-#{@item.id}" do
           expect(page).to have_content("Name: New #{@item.name}")
           expect(page).to have_content("Price: #{number_to_currency(7654.32)}")
@@ -264,9 +268,13 @@ RSpec.describe 'Merchant Dashboard Items page' do
       after :each do
         placeholder_image = 'https://picsum.photos/200/300/?image=524'
         image = 'https://picsum.photos/200/300/?image=5'
-
+    
         fill_in :item_image, with: ""
         click_button 'Update Item'
+
+        item_check = Item.find(@item.id)
+
+        expect(item_check.slug).to eq(@item.slug)
 
         within "#item-#{@item.id}" do
           expect(page.find("#item-#{@item.id}-image")['src']).to have_content(placeholder_image)
@@ -294,6 +302,10 @@ RSpec.describe 'Merchant Dashboard Items page' do
         fill_in :item_price, with: ""
         fill_in :item_inventory, with: ""
         click_button 'Update Item'
+
+        item_check = Item.find(@item.id)
+
+        expect(item_check.slug).to eq(@item.slug)
 
         expect(page).to have_content("prohibited this item from being saved")
         expect(page).to have_content("Name can't be blank")
