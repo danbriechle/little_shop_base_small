@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   has_many :order_items
   has_many :orders, through: :order_items
 
-  before_save :generate_slug
+  before_create :generate_slug
 
   validates_presence_of :name, :description
   validates :price, presence: true, numericality: {

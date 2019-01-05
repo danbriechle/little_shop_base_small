@@ -66,8 +66,7 @@ RSpec.describe 'Merchant Dashboard page' do
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
-        visit item_path(item)
-
+        visit item_path(item.slug)
         expect(page).to have_content("In stock: 100")
 
         visit dashboard_path
@@ -91,8 +90,8 @@ RSpec.describe 'Merchant Dashboard page' do
           within "#item-#{item.id}" do
             expect(page).to have_link(item.name)
             expect(page.find("#item-#{item.id}-image")['src']).to have_content(item.image)
-            expect(page).to have_content("Price: #{number_to_currency(order.item_price(item))}")
-            expect(page).to have_content("Quantity: #{order.item_quantity(item)}")
+            expect(page).to have_content("Price: #{number_to_currency(order.item_price(item.id))}")
+            expect(page).to have_content("Quantity: #{order.item_quantity(item.id)}")
             expect(page).to have_button('Fulfill Item')
           end
           expect(page).to_not have_css("#item-#{item_2.id}")
@@ -274,8 +273,5 @@ RSpec.describe 'Merchant Dashboard page' do
         end
       end
     end
-  end
-
-  context 'as an admin' do
   end
 end
