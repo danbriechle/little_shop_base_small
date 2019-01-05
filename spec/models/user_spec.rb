@@ -176,6 +176,12 @@ RSpec.describe User, type: :model do
         user = create(:user, email: 'Dave_Johnson345@aol.com' )
         expect(user.slug).to eq('dave-johnson345-aol-com')
       end
-    end
+
+      it '.slug_update' do
+        user = create(:user)
+        email = "1234@34.com"
+        expect(user.slug_update(email)).to eq("1234-34-com")
+      end
+   end
   end
 end

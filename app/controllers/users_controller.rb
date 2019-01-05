@@ -25,6 +25,10 @@ class UsersController < ApplicationController
     render file: 'errors/not_found', status: 404 unless current_user == @user || current_admin?
 
     @user.update(user_params)
+    
+      if user_params.include?(:email)
+       @user[:slug] = @user.slug_update(user_params[:email])
+      end
 
     if @user.save
       session[:slug] = @user.slug

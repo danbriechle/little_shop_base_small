@@ -51,6 +51,8 @@ RSpec.describe 'Admin User Show workflow', type: :feature do
 
       user_check = User.find(@user_1.id)
       expect(user_check.password_digest).to_not eq(@user_1.password_digest)
+      
+      expect(user_check.slug.include?("email-2")).to be true
 
       expect(current_path).to eq(admin_user_path(user_check.slug))
       expect(page).to have_content("Profile Page for #{user_check.name}")
