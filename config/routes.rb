@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root to: 'welcome#index'
 
-  resources :items, only: [:index, :show], param: :slug
+  resources :items, only: [:index, :show], param: :slug do
+    resources :reviews, only: [:new, :create], param: :item_slug
+  end
+
+
   resources :merchants, only: [:index]
 
   get '/cart', to: 'cart#index'
@@ -32,6 +36,7 @@ Rails.application.routes.draw do
   get '/profile/edit', to: 'users#edit'
   namespace :profile do
     resources :orders, only: [:index, :create, :show, :destroy]
+    resources :reviews, only: [:index]
   end
 
   post '/admin/users/:merchant_slug/items', to: 'dashboard/items#create', as: 'admin_user_items'
