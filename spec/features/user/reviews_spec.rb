@@ -34,7 +34,8 @@ RSpec.describe 'Profile Orders page', type: :feature do
     end
 
     click_on 'Review Item'
-      expect(current_path).to eq(new_item_review_path(@oi_2.item_id))
+  
+      expect(current_path).to eq(new_item_review_path(@oi_2.slug))
 
       title = "title_1"
       description = "description_1"

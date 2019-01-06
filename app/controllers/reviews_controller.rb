@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
 
   def new
     @review = Review.new
-    @item = Item.find(params[:item_slug])
+    @item = Item.find_by(slug: params[:item_slug])
   end
 
   def create
