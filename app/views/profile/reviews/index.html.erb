@@ -1,0 +1,11 @@
+<h1>My Reviews</h1>
+<% @reviews.each do |review| %>
+  <div class="reviews" id="review-<%= review.id %>">
+    <%= review.title %>
+    <%= review.description %>
+    <%= review.score %>
+    <%= link_to 'Edit Review' %>
+    <%= link_to 'Disable Review' %>
+    <%= link_to 'Delete Review' %>
+    <% end %>
+  </div>
