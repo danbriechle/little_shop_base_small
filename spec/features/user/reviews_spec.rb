@@ -34,7 +34,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
     end
 
     click_on 'Review Item'
-  
+
       expect(current_path).to eq(new_item_review_path(@oi_2.slug))
 
       title = "title_1"
@@ -66,6 +66,38 @@ RSpec.describe 'Profile Orders page', type: :feature do
       end
     end
     #Ratings will include a title, a description, and a rating from 1 to 5.
+    it 'I cannot leave a review with missing info' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      visit profile_order_path(@order)
+
+      within "#oitem-#{@oi_2.id}" do
+        expect(page).to have_content("Fulfilled: Yes")
+        expect(page).to have_link("Review Item")
+      end
+
+      click_on 'Review Item'
+
+      expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+
+      title = "title_1"
+      description = "description_1"
+      score = 2000000
+
+      fill_in :review_title, with: title
+      fill_in :review_description, with: description
+      fill_in :review_score, with: score
+
+      click_on 'Create Review'
+
+      expect(page).to have_content("Required Fields Missing or Incorrect")
+
+    end
+
+
+
+
+
 
     describe 'i cannot rate an item I have canceled purchase of' do
     end
@@ -76,10 +108,19 @@ RSpec.describe 'Profile Orders page', type: :feature do
     describe 'if I order th item again I can leave and other rating' do
     end
 
+    describe 'I can edit a review' do
+    end
+
     describe 'I can disable a rating' do
     end
 
+    describe 'I can delete a review' do
+    end
+
     describe 'has an average rating shown on the item show page' do
+    end
+
+    describe 'has the total count of ratings on the Items show page' do
     end
   end
 end
