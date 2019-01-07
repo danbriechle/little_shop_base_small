@@ -122,13 +122,18 @@ RSpec.describe 'Profile Orders page', type: :feature do
 
     end
 
+    it 'i cannot rate an item I have canceled purchase of' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
+      visit profile_order_path(@order_2)
 
+      within "#oitem-#{@oi_1.id}" do
+        expect(page).to have_content("Fulfilled: No")
+        expect(page).to_not have_link("Review Item")
+      end
 
-
-
-
-    describe 'i cannot rate an item I have canceled purchase of' do
+      click_on "Cancel Order"
+      expect(page).to_not have_link("Review Item")
     end
 
     describe 'I can only write one rating per item order' do
