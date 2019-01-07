@@ -66,7 +66,35 @@ RSpec.describe 'Profile Orders page', type: :feature do
       end
     end
     #Ratings will include a title, a description, and a rating from 1 to 5.
-    it 'I cannot leave a review with missing info' do
+    it 'I cannot leave a review with incorect info' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      visit profile_order_path(@order)
+
+      within "#oitem-#{@oi_2.id}" do
+        expect(page).to have_content("Fulfilled: Yes")
+        expect(page).to have_link("Review Item")
+      end
+
+      click_on 'Review Item'
+
+      expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+
+      title = "title_1"
+      # description = "description_1"
+      score = 2
+
+      fill_in :review_title, with: title
+      # fill_in :review_description, with: description
+      fill_in :review_score, with: score
+
+      click_on 'Create Review'
+
+      expect(page).to have_content("Required Fields Missing or Incorrect")
+
+    end
+
+    it 'I cannot leave a review with incorect info' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit profile_order_path(@order)
@@ -93,6 +121,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
       expect(page).to have_content("Required Fields Missing or Incorrect")
 
     end
+
 
 
 
