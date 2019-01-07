@@ -18,11 +18,10 @@ class ReviewsController < ApplicationController
       flash[:notice] = "you have reviewed #{@item.name}"
       redirect_to profile_path
     else
-      render '/new'
+      flash[:error] = "Required Fields Missing or Incorrect"
+      redirect_to new_item_review_path
     end
   end
-
-
 
   private
 
