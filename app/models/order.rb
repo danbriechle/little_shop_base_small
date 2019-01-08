@@ -83,4 +83,5 @@ class Order < ApplicationRecord
   def item_fulfilled?(item_id)
     order_items.where(item_id: item_id).pluck(:fulfilled).first
   end
+
 end

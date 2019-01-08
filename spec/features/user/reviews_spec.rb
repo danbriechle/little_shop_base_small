@@ -18,6 +18,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
 
     @oi_1 = create(:order_item, order: @order_2, item: @item_1, price: 1, quantity: 1, created_at: yesterday, updated_at: yesterday)
     @oi_2 = create(:fulfilled_order_item, order: @order, item: @item_2, price: 2, quantity: 1, created_at: yesterday, updated_at: 2.hours.ago)
+    @oi_3 = create(:fulfilled_order_item, order: @order, item: @item_2, price: 2, quantity: 1, created_at: yesterday, updated_at: 2.hours.ago)
   end
 
   context 'as a registered user' do
@@ -31,9 +32,9 @@ RSpec.describe 'Profile Orders page', type: :feature do
     within "#oitem-#{@oi_2.id}" do
       expect(page).to have_content("Fulfilled: Yes")
       expect(page).to have_link("Review Item")
+      click_on 'Review Item'
     end
 
-    click_on 'Review Item'
 
       expect(current_path).to eq(new_item_review_path(@oi_2.slug))
 
@@ -74,9 +75,9 @@ RSpec.describe 'Profile Orders page', type: :feature do
       within "#oitem-#{@oi_2.id}" do
         expect(page).to have_content("Fulfilled: Yes")
         expect(page).to have_link("Review Item")
+        click_on 'Review Item'
       end
 
-      click_on 'Review Item'
 
       expect(current_path).to eq(new_item_review_path(@oi_2.slug))
 
@@ -102,9 +103,9 @@ RSpec.describe 'Profile Orders page', type: :feature do
       within "#oitem-#{@oi_2.id}" do
         expect(page).to have_content("Fulfilled: Yes")
         expect(page).to have_link("Review Item")
+        click_on 'Review Item'
       end
 
-      click_on 'Review Item'
 
       expect(current_path).to eq(new_item_review_path(@oi_2.slug))
 
@@ -122,7 +123,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
 
     end
 
-    it 'i cannot rate an item I have canceled purchase of' do
+    it 'I cannot rate an item I have canceled purchase of' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit profile_order_path(@order_2)
@@ -136,10 +137,47 @@ RSpec.describe 'Profile Orders page', type: :feature do
       expect(page).to_not have_link("Review Item")
     end
 
-    describe 'I can only write one rating per item order' do
+    it 'I can only write one rating per item order' do
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      visit profile_order_path(@order)
+
+      within "#oitem-#{@oi_2.id}" do
+        expect(page).to have_content("Fulfilled: Yes")
+        expect(page).to have_link("Review Item")
+        click_on 'Review Item'
+      end
+
+
+        expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+
+        title = "title_1"
+        description = "description_1"
+        score = 5
+
+        fill_in :review_title, with: title
+        fill_in :review_description, with: description
+        fill_in :review_score, with: score
+
+        click_on 'Create Review'
+
+        item = Item.find(@oi_2.item_id)
+
+        expect(current_path).to eq(profile_path)
+        expect(page).to have_content("you have reviewed #{item.name}")
+
+        click_on "My Orders"
+
+        click_on "Order ID #{@order.id}"
+
+        within "#oitem-#{@oi_2.id}" do
+          expect(page).to have_content("Fulfilled: Yes")
+          expect(page).to_not have_link("Review Item")
+        end
     end
 
-    describe 'if I order th item again I can leave and other rating' do
+    describe 'if I order the item again I can leave another rating' do
     end
 
     describe 'I can edit a review' do

@@ -182,5 +182,6 @@ RSpec.describe Order, type: :model do
       expect(order.item_fulfilled?(item_1.id)).to eq(false)
       expect(order.item_fulfilled?(item_2.id)).to eq(true)
     end
+
   end
 end
