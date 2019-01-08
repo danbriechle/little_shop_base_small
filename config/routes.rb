@@ -33,8 +33,9 @@ Rails.application.routes.draw do
   namespace :profile do
     resources :reviews, only: [:index]
     resources :orders, only: [:index, :create, :show, :destroy] do
-      get '/order_item/:slug/review/new', to: 'reviews#new', as: 'new_review'
-      post '/order_item/:slug/review', to: 'reviews#create', as: 'order_item_reviews'
+      get '/order_item/:id/review/new', to: 'reviews#new', as: 'new_review'
+      post '/order_item/:id/review', to: 'reviews#create', as: 'order_item_reviews'
+      delete '/order_item/:id/review', to: 'reviews#destroy', as: 'delete_item_review'
   end
 
   end

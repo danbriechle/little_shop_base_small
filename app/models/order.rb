@@ -85,9 +85,7 @@ class Order < ApplicationRecord
   end
 
   def reviewed_this_order?(item_id)
-    order_items.where(
-      :item_id => item_id,
-      :reviewed => true).pluck(:reviewed).first
+      order_items.where(:item_id => item_id,:reviewed => true).pluck(:reviewed).last
   end
 
 end

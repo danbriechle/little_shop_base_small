@@ -2,7 +2,7 @@ class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :item
   has_many :reviews
-  before_create :generate_slug
+
 
   validates :price, presence: true, numericality: {
     only_integer: false,
@@ -20,12 +20,6 @@ class OrderItem < ApplicationRecord
 
   def subtotal
     quantity * price
-  end
-
-  private
-
-  def generate_slug
-    self.slug = item.slug
   end
 
 end
