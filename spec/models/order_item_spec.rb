@@ -15,18 +15,7 @@ RSpec.describe OrderItem, type: :model do
   end
 
   describe 'instance methods' do
-    it '.item_reviewed?' do
-    merchant = create(:merchant)
-    item_1 = create(:item, user: merchant)
-    order = create(:order)
-    oi_1 = create(:fulfilled_order_item, order: order, item: item_1, price: 345.67, quantity: 397, reviewed: false)
-    oi_2 = create(:fulfilled_order_item, order: order, item: item_1, price: 345.67, quantity: 397, reviewed: true)
-    expect(oi_1.order_item_reviewed?).to eq(false)
-    expect(oi_2.order_item_reviewed?).to eq(true)
-    end
-  end
 
-  describe 'instance methods' do
     it '.subtotal' do
       oi = create(:order_item, quantity: 5, price: 3)
 

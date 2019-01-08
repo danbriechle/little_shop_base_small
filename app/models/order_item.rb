@@ -21,10 +21,6 @@ class OrderItem < ApplicationRecord
     quantity * price
   end
 
-  def order_item_reviewed?
-    reviewed
-  end
-
   private
 
   def generate_slug
