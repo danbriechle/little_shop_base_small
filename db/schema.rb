@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20190107234606) do
     t.string "description"
     t.integer "score"
     t.bigint "user_id"
-    t.bigint "item_id"
-    t.index ["item_id"], name: "index_reviews_on_item_id"
+    t.bigint "order_item_id"
+    t.index ["order_item_id"], name: "index_reviews_on_order_item_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 

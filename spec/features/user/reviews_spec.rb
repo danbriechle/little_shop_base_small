@@ -36,7 +36,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
     end
 
 
-      expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+      expect(current_path).to eq(profile_order_new_review_path(@order, @oi_2.slug))
 
       title = "title_1"
       description = "description_1"
@@ -79,7 +79,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
       end
 
 
-      expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+      expect(current_path).to eq(profile_order_new_review_path(@order, @oi_2.slug))
 
       title = "title_1"
       # description = "description_1"
@@ -107,7 +107,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
       end
 
 
-      expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+      expect(current_path).to eq(profile_order_new_review_path(@order, @oi_2.slug))
 
       title = "title_1"
       description = "description_1"
@@ -137,7 +137,23 @@ RSpec.describe 'Profile Orders page', type: :feature do
       expect(page).to_not have_link("Review Item")
     end
 
-    it 'I can only write one rating per item order' do
+    it 'I can only review one item per order' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      yesterday = 1.day.ago
+
+      @oi_4 = create(:fulfilled_order_item, order: @order, item: @item_2, price: 2, quantity: 1, created_at: yesterday, updated_at: 2.hours.ago, reviewed: true)
+
+      visit profile_order_path(@order)
+
+      within "#oitem-#{@oi_2.id}" do
+        expect(page).to have_content("Fulfilled: Yes")
+        expect(page).to_not have_link("Review Item")
+        expect(page).to have_content("You have already reviewed this item")
+      end
+    end
+
+    it 'I updates reviews when added' do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
@@ -150,7 +166,8 @@ RSpec.describe 'Profile Orders page', type: :feature do
       end
 
 
-        expect(current_path).to eq(new_item_review_path(@oi_2.slug))
+
+        expect(current_path).to eq(profile_order_new_review_path(@order, @oi_2.slug))
 
         title = "title_1"
         description = "description_1"

@@ -1,6 +1,6 @@
 <h2>New Review</h2>
 
-<%= form_for [@item, @review] do |f| %>
+<%= form_for @form_path do |f| %>
 
   <% if @review.errors.any? %>
     <div id="error_explanation">
