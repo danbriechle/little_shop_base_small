@@ -1,6 +1,7 @@
 class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :item
+  has_many :reviews
   before_create :generate_slug
 
   validates :price, presence: true, numericality: {

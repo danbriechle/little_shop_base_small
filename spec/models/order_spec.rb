@@ -182,5 +182,19 @@ RSpec.describe Order, type: :model do
       expect(order.item_fulfilled?(item_1.id)).to eq(false)
       expect(order.item_fulfilled?(item_2.id)).to eq(true)
     end
+
+    it '.reviewed_this_order' do
+      merchant = create(:merchant)
+      item_1 = create(:item, user: merchant)
+      item_2 = create(:item, user: merchant)
+      order = create(:order)
+      oi_1 = create(:order_item, order: order, item: item_1, price: 345.67, quantity: 397, reviewed: false)
+      oi_2 = create(:fulfilled_order_item, order: order, item: item_1, price: 345.67, quantity: 397, reviewed: true)
+      oi_3 = create(:fulfilled_order_item, order: order, item: item_2, price: 345.67, quantity: 397, reviewed: false)
+
+      expect(order.reviewed_this_order?(item_1.id)).to eq(true)
+      expect(order.reviewed_this_order?(item_2.id)).to eq(nil)
+
+    end
   end
 end

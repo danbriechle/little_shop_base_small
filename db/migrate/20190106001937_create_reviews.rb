@@ -5,7 +5,7 @@ class CreateReviews < ActiveRecord::Migration[5.1]
       t.string :description
       t.integer :score
       t.references :user, index: true
-      t.references :item, index: true
+      t.references :order_item, index: true
     end
   end
 end

@@ -14,8 +14,8 @@
 <% end %>
 
 <% if @user == current_user %>
-<%= link_to 'My Reviews', profile_reviews_path %>
 <%= link_to 'My Orders', profile_orders_path %>
+<%= link_to 'My Reviews', profile_reviews_path %>
 <% elsif current_admin? %>
 <%= link_to 'My Orders', admin_user_orders_path(@user) %>
 <% end %>

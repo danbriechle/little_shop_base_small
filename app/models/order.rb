@@ -83,4 +83,11 @@ class Order < ApplicationRecord
   def item_fulfilled?(item_id)
     order_items.where(item_id: item_id).pluck(:fulfilled).first
   end
+
+  def reviewed_this_order?(item_id)
+    order_items.where(
+      :item_id => item_id,
+      :reviewed => true).pluck(:reviewed).first
+  end
+
 end
