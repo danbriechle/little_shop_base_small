@@ -21,6 +21,5 @@ RSpec.describe OrderItem, type: :model do
 
       expect(oi.subtotal).to eq(15)
     end
-
   end
 end

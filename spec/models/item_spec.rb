@@ -66,6 +66,27 @@ RSpec.describe Item, type: :model do
       expect(item_1.ever_ordered?).to eq(true)
       expect(item_2.ever_ordered?).to eq(false)
     end
+
+    it '.average_score' do
+      user_1 = create(:user)
+
+      merchant_1 = create(:merchant)
+
+      item_1 = create(:item, user: merchant_1)
+
+      order_1 = create(:completed_order, user: user_1)
+
+      oi_1 = create(:fulfilled_order_item, item: item_1, order: order_1, quantity: 1, price: 100, created_at: 10.minutes.ago, updated_at: 9.minute.ago)
+
+      oi_2 = create(:fulfilled_order_item, item: item_1, order: order_1, quantity: 1, price: 300, created_at: 2.days.ago, updated_at: 1.minute.ago)
+
+      review = user_1.reviews.create!(title: "Text", description: "text", score: 4 , order_item: oi_1 )
+
+      review = user_1.reviews.create!(title: "Text", description: "text", score: 2 , order_item: oi_2 )
+
+
+      expect(item_1.average_score).to eq(3)
+    end
   end
 
   describe 'slug methods' do
