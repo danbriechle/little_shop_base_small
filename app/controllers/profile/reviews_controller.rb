@@ -39,6 +39,8 @@ class Profile::ReviewsController < ApplicationController
 
   def destroy
     review = Review.find(params[:id])
+    order_item = OrderItem.find(params[:order_id])
+    order_item.update(reviewed: false)
     review.destroy
     redirect_to profile_path
   end
