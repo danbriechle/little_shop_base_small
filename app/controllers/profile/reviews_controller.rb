@@ -44,9 +44,9 @@ class Profile::ReviewsController < ApplicationController
   end
 
   def update
-    @review = Review.find(params[:format])
+    @review = Review.find(params[:id])
     @user = current_user
-    @order_item = OrderItem.find(params[:id])
+    @order_item = OrderItem.find(@review.order_item_id)
     @item = Item.find(@order_item.item_id)
     hash = review_params
     hash[:order_item_id] = @order_item.id
@@ -55,9 +55,6 @@ class Profile::ReviewsController < ApplicationController
       @order_item.update(reviewed: true)
       flash[:notice] = "you updated your review of #{@item.name}"
       redirect_to profile_path
-    else
-      flash[:error] = "Required Fields Missing or Incorrect"
-      redirect_to profile_order_edit_review_path(@order_item.order_id, @order_item.id)
     end
   end
 

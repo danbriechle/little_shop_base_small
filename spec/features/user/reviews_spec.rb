@@ -61,7 +61,6 @@ RSpec.describe 'Profile Orders page', type: :feature do
         expect(page).to have_content(review.description)
         expect(page).to have_content(review.score)
         expect(page).to have_link("Edit Review")
-        expect(page).to have_link("Disable Review")
         expect(page).to have_link("Delete Review")
       end
     end
@@ -233,7 +232,7 @@ RSpec.describe 'Profile Orders page', type: :feature do
           expect(page).to have_content(review.description)
           expect(page).to have_content(review.score)
           expect(page).to have_link("Edit Review")
-          expect(page).to have_link("Disable Review")
+
           expect(page).to have_link("Delete Review")
         end
 
@@ -302,7 +301,6 @@ RSpec.describe 'Profile Orders page', type: :feature do
         expect(page).to have_content(review.description)
         expect(page).to have_content(review.score)
         expect(page).to have_link("Edit Review")
-        expect(page).to have_link("Disable Review")
         expect(page).to have_link("Delete Review")
         click_on "Delete Review"
       end
@@ -329,102 +327,82 @@ RSpec.describe 'Profile Orders page', type: :feature do
     end
 
 
-      expect(current_path).to eq(profile_order_new_review_path(@order, @oi_2.id))
+    expect(current_path).to eq(profile_order_new_review_path(@order, @oi_2.id))
 
-      title = "title_1"
-      description = "description_1"
-      score = 5
+    title = "title_1"
+    description = "description_1"
+    score = 5
 
-      fill_in :review_title, with: title
-      fill_in :review_description, with: description
-      fill_in :review_score, with: score
+    fill_in :review_title, with: title
+    fill_in :review_description, with: description
+    fill_in :review_score, with: score
 
-      click_on 'Create Review'
+    click_on 'Create Review'
 
-      item = Item.find(@oi_2.item_id)
+    item = Item.find(@oi_2.item_id)
 
-      expect(current_path).to eq(profile_path)
-      expect(page).to have_content("you have reviewed #{item.name}")
+    expect(current_path).to eq(profile_path)
+    expect(page).to have_content("you have reviewed #{item.name}")
 
-      click_on "My Reviews"
+    click_on "My Reviews"
 
-      review = Review.last
+    review = Review.last
 
-      within "#review-#{review.id}" do
-        expect(page).to have_content(review.title)
-        expect(page).to have_content(review.description)
-        expect(page).to have_content(review.score)
-        expect(page).to have_link("Edit Review")
-        expect(page).to have_link("Disable Review")
-        expect(page).to have_link("Delete Review")
-      end
+    within "#review-#{review.id}" do
+      expect(page).to have_content(review.title)
+      expect(page).to have_content(review.description)
+      expect(page).to have_content(review.score)
+      expect(page).to have_link("Edit Review")
+      expect(page).to have_link("Delete Review")
+    end
 
-      click_on "Edit Review"
+    click_on "Edit Review"
 
-      new_title = "new_title_1"
-      new_description = "new_description_1"
-      new_score = 3
+    new_title = "new_title_1"
+    new_description = "new_description_1"
+    new_score = 3
 
-      fill_in :review_title, with: new_title
-      fill_in :review_description, with: new_description
-      fill_in :review_score, with: new_score
+    fill_in :review_title, with: new_title
+    fill_in :review_description, with: new_description
+    fill_in :review_score, with: new_score
 
-      click_on 'Update Review'
+    click_on 'Update Review'
 
-      item = Item.find(@oi_2.item_id)
+    item = Item.find(@oi_2.item_id)
 
-      expect(current_path).to eq(profile_path)
-      expect(page).to have_content("you updated your review of #{item.name}")
+    expect(current_path).to eq(profile_path)
+    expect(page).to have_content("you updated your review of #{item.name}")
 
-      click_on "My Reviews"
+    click_on "My Reviews"
 
-      new_review = Review.last
+    new_review = Review.last
 
       within "#review-#{new_review.id}" do
         expect(page).to have_content(new_title)
         expect(page).to have_content(new_description)
         expect(page).to have_content(new_score)
         expect(page).to have_link("Edit Review")
-        expect(page).to have_link("Disable Review")
         expect(page).to have_link("Delete Review")
       end
     end
 
-    it 'I cant edit a review with wrong info' do
-    end
-
-    describe 'I can disable a rating' do
-    end
-
-
-    describe 'has an average rating shown on the item show page' do
-    end
-
-    describe 'has the total count of ratings on the Items show page' do
-    end
   end
 end
 
-#navigate to a reviews
-#index page from their profile page, and from there they can add, edit, show, or delete any review.
-
-# Users will have the ability to leave ratings for items they have successfully purchased.
+# Users can navigate to a reviews index page from their profile page, and from there they can add, edit, show, or delete any review. DONE
 #
-# Users cannot rate items from orders which have been canceled by the user.
+# Users will have the ability to leave ratings for items they have successfully purchased. DONE
 #
-# Users can write one rating per item per order. If the user orders an item (in any quantity) they can leave one rating.
-#If they order the item again in a different order, the user can leave another rating.
+# Users cannot rate items from orders which have been canceled by the user. DONE
 #
-# Build all CRUD functionality for users to add a rating through their order show page.
+# Users can write one rating per item per order. If the user orders an item (in any quantity) they can leave one rating. DONE
 #
-# Users can disable any rating they created.
+# If they order the item again in a different order, the user can leave another rating. DONE
+#
+# Build all CRUD functionality for users to add a rating through their order show page. DONE
+#
+# Users can disable/delete any rating they created.DONE
 #
 # Disabled ratings should not factor into total counts of ratings, nor averages of ratings.
 #
-# Ratings will include a title, a description, and a rating from 1 to 5.
-#
-# Mod 2 Learning Goals reflected:
-# Database relationships
-# Rails development (including routing)
-# Software Testing
-# HTML/CSS styling and layout
+# Ratings will include a title, a description, and a rating from 1 to 5.DONE

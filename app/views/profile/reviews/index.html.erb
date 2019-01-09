@@ -5,7 +5,6 @@
     <%= review.description %>
     <%= review.score %>
     <%= link_to 'Edit Review', profile_order_edit_review_path(review.order_item_id, review.id) %>
-    <%= link_to 'Disable Review' %>
     <%= link_to 'Delete Review', profile_order_delete_item_review_path(review.order_item_id, review.id), method: :delete %>
     <% end %>
   </div>
