@@ -8,6 +8,7 @@
     <p>Description: <em><%= item.description %></em></p>
     <p>Price: <%= number_to_currency(item.price) %></p>
     <p>
+      <p> Average Rating: <%= item.average_score %></p>
       <strong>Sold by:</strong> <%= item.user.name %><br/>
       <strong>In stock:</strong> <%= item.inventory %>
     </p>

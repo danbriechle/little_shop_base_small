@@ -9,5 +9,10 @@
     <p>Quantity: <%= oitem.quantity %></p>
     <p>Subtotal: <%= number_to_currency(oitem.subtotal) %></p>
     <p>Fulfilled: <%= oitem.fulfilled ? 'Yes' : 'No' %></p>
+    <% if @order.reviewed_this_order?(oitem.item_id) %>
+      You have already reviewed this item this order
+    <% elsif (@order.status == "completed") && (@order.reviewed_this_order?(oitem.item_id) == nil) %>
+    <%= link_to 'Review Item', profile_order_new_review_path(@order, oitem.id) %>
+    <% end %>
   </div>
 </div>
