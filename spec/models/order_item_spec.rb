@@ -21,13 +21,5 @@ RSpec.describe OrderItem, type: :model do
 
       expect(oi.subtotal).to eq(15)
     end
-
-    it '.generate_slug' do
-      oi = create(:order_item, quantity: 5, price: 3)
-
-      item = Item.find(oi.item_id)
-
-      expect(item.slug).to eq(oi.slug)
-    end
   end
 end

@@ -38,11 +38,9 @@ ActiveRecord::Schema.define(version: 20190107234606) do
     t.boolean "fulfilled", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "slug"
     t.boolean "reviewed", default: false
     t.index ["item_id"], name: "index_order_items_on_item_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
-    t.index ["slug"], name: "index_order_items_on_slug"
   end
 
   create_table "orders", force: :cascade do |t|

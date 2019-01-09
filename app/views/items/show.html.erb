@@ -1,5 +1,6 @@
 
 <h2><%= @item.name %></h2>
+<p> <%= @item.average_score %></p>
 
 <%= tag.div id: "item-#{@item.id}" do %>
 <%= render partial: "card", locals: {item: @item, img_width: 400} %>

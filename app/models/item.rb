@@ -54,6 +54,10 @@ class Item < ApplicationRecord
     name.downcase.gsub(/[!@%&"_.?*()#$^~ ]/,'-').delete(" ") + SecureRandom.uuid
   end
 
+  def average_score
+    reviews.average(:score)
+  end
+
   private
 
   def generate_slug
